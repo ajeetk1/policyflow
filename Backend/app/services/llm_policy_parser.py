@@ -3,7 +3,7 @@ import json
 import logging
 import time
 
-from groq import RateLimitError
+from openai import RateLimitError
 
 from app.llm.client import client
 from app.llm.prompts import POLICY_EXTRACTION_PROMPT
@@ -111,14 +111,14 @@ def _extract_rule_with_llm(rule: dict[str, str]) -> PolicyRule:
         except RateLimitError:
             if attempt == MAX_ATTEMPTS - 1:
                 logging.exception(
-                    "Groq rate limit retries exhausted for rule %s",
+                    "OpenRouter rate limit retries exhausted for rule %s",
                     rule_id,
                 )
                 raise
 
             delay = min(5 * (2**attempt), 60)
             logging.warning(
-                "Groq rate limit for rule %s; retrying in %s seconds "
+                "OpenRouter rate limit for rule %s; retrying in %s seconds "
                 "(attempt %s/%s)",
                 rule_id,
                 delay,
@@ -136,7 +136,7 @@ def extract_policy_rules_with_llm(
     if not rule_blocks:
         return []
 
-    # Sequential calls reduce TPM spikes on Groq's on-demand tier.
+    # Sequential calls reduce rate-limit pressure on the model provider.
     # Failed rate-limited requests are retried by the function above.
     rules: list[PolicyRule] = []
 

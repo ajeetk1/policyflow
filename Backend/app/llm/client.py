@@ -1,18 +1,21 @@
 import os
 
 from dotenv import load_dotenv
-from groq import Groq
+from openai import OpenAI
 
 
 load_dotenv()
 
-
-api_key = os.getenv("GROQ_API_KEY")
+api_key = os.getenv("OPENROUTER_API_KEY")
 
 if not api_key:
-    raise RuntimeError(
-        "GROQ_API_KEY is not configured"
-    )
+    raise RuntimeError("OPENROUTER_API_KEY is not configured")
 
-
-client = Groq(api_key=api_key)
+client = OpenAI(
+    api_key=api_key,
+    base_url="https://openrouter.ai/api/v1",
+    default_headers={
+        "HTTP-Referer": "https://policyflow-lovat.vercel.app",
+        "X-Title": "Policy Flow",
+    },
+)
