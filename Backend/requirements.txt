@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+pypdf
+python-multipart
+alembic
+PyJWT[crypto]
+pwdlib[argon2]
+SQLAlchemy>=2.0,<3.0
+psycopg[binary]>=3.2,<4.0
+python-dotenv

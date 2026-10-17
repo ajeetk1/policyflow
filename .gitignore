@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.venv/
+venv/
+
+# Frontend generated files and local secrets
+Frontend/node_modules/
+Frontend/.next/
+Frontend/.env.local
+
+# Backend local data and test artifacts
+Backend/app/data/policy_uploads/
+Backend/.pytest_cache/
+
+# Ignore environment files, but keep safe example templates
+.env*
+**/.env*
+!**/.env.example
